@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
   
   return {
     // This fix tells GitHub Pages where to find your files
-    base: '/Green-Ruwa-main/', 
+    base: '/', 
     plugins: [react(), tailwindcss()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
