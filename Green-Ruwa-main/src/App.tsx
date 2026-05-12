@@ -1054,12 +1054,12 @@ export function AboutPage() {
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle,#F5821F_0%,rgba(255,255,255,0)_60%)] opacity-20" />
       </div>
-      
+
       <style>{`
         @keyframes mini-vibrate {
           0%, 100% { transform: translate(0, 0); }
-          25% { transform: translate(1px, -1px); }
-          50% { transform: translate(-1px, 1px); }
+          25% { transform: translate(1px, -1px); } 
+          50% { transform: translate(-1px, 1px); } 
           75% { transform: translate(1px, 1px); }
         }
         .hover-vibrate:hover {
@@ -1067,18 +1067,19 @@ export function AboutPage() {
         }
       `}</style>
 
-      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
         {/* Image Side */}
         <motion.div 
           initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
+          className="flex justify-center"
         >
-          <div className="relative flex justify-center group cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-105 hover-vibrate">
+          <div className="relative w-full max-w-[280px] sm:max-w-sm lg:max-w-md group cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-105 hover-vibrate">
             {/* Navy Decorative Tab Top */}
             <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 w-32 h-10 bg-[#0B1736] rounded-t-2xl z-0" />
             
-            <div className="relative w-full max-w-md aspect-[4/5] bg-[#00FFFF] rounded-[3rem] shadow-2xl overflow-hidden border-8 border-white">
+            <div className="relative w-full aspect-[4/5] bg-[#00FFFF] rounded-[2.5rem] sm:rounded-[3rem] shadow-2xl overflow-hidden border-4 sm:border-8 border-white">
               <img 
                 src={GreenMainImg} 
                 alt="Green Ruwa" 
@@ -1099,7 +1100,7 @@ export function AboutPage() {
           className="flex flex-col gap-8"
         >
           <div className="flex flex-col gap-2 -mb-12 md:-mb-16">
-            <h2 className="text-[#0B1736] font-black text-6xl md:text-8xl font-display leading-none uppercase tracking-tighter">
+            <h2 className="text-[#0B1736] font-black text-4xl sm:text-6xl lg:text-8xl font-display leading-none uppercase tracking-tighter">
               ABOUT ME
             </h2>
             <div className="flex gap-3 mt-4">
