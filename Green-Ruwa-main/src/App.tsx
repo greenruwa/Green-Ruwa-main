@@ -1048,7 +1048,7 @@ export function AboutPage() {
     <motion.section 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="relative w-full min-h-screen bg-white flex items-center justify-center py-20 px-6 overflow-hidden"
+      className="relative w-full min-h-screen bg-white flex items-center justify-center py-24 md:py-32 px-6 overflow-hidden"
     >
       {/* Radial Gradient Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -1075,7 +1075,7 @@ export function AboutPage() {
           transition={{ delay: 0.2 }}
           className="flex justify-center"
         >
-          <div className="relative w-full max-w-[280px] sm:max-w-sm lg:max-w-md group cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-105 hover-vibrate">
+          <div className="relative w-full max-w-[260px] lg:max-w-[300px] group cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-105 hover-vibrate">
             {/* Navy Decorative Tab Top */}
             <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 w-32 h-10 bg-[#0B1736] rounded-t-2xl z-0" />
             
@@ -1088,7 +1088,7 @@ export function AboutPage() {
             </div>
 
             {/* Navy Decorative Tab Bottom */}
-            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[90%] h-20 bg-[#0B1736] rounded-2xl z-20 shadow-2xl" />
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[90%] h-12 bg-[#0B1736] rounded-2xl z-20 shadow-2xl" />
           </div>
         </motion.div>
 
@@ -1100,22 +1100,22 @@ export function AboutPage() {
           className="flex flex-col gap-8"
         >
           <div className="flex flex-col gap-2 -mb-12 md:-mb-16">
-            <h2 className="text-[#0B1736] font-black text-4xl sm:text-6xl lg:text-8xl font-display leading-none uppercase tracking-tighter">
+            <h2 className="text-[#0B1736] font-black text-3xl lg:text-5xl font-display leading-none uppercase tracking-tighter">
               ABOUT ME
             </h2>
             <div className="flex gap-3 mt-4">
-              <div className="w-6 h-6 rounded-full bg-white border-2 border-[#0B1736] animate-bounce [animation-delay:-0.3s]" />
-              <div className="w-6 h-6 rounded-full bg-[#F5821F] animate-bounce [animation-delay:-0.15s]" />
-              <div className="w-6 h-6 rounded-full bg-[#0B1736] animate-bounce" />
-              <div className="w-6 h-6 rounded-full bg-[#00FFFF] animate-bounce [animation-delay:0.15s]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-white border-2 border-[#0B1736] animate-bounce [animation-delay:-0.3s]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#F5821F] animate-bounce [animation-delay:-0.15s]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#0B1736] animate-bounce" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#00FFFF] animate-bounce [animation-delay:0.15s]" />
             </div>
           </div>
 
           <div className="space-y-6 pt-12 md:pt-16">
-            <p className="text-[#0B1736] text-xl md:text-2xl font-bold leading-relaxed">
+            <p className="text-[#0B1736] text-base lg:text-lg font-bold leading-relaxed">
               As a dedicated creative strategist and multimedia expert, I specialize in transforming complex ideas into high-impact visual narratives.
             </p>
-            <p className="text-[#0B1736]/70 text-lg leading-relaxed">
+            <p className="text-[#0B1736]/70 text-base lg:text-lg leading-relaxed">
               With years of experience across graphic design, video production, and motion graphics, my mission is to bridge the gap between technical precision and artistic passion. I don't just create designs; I build identities that resonate and stories that stick.
             </p>
           </div>
@@ -1126,7 +1126,7 @@ export function AboutPage() {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-fit bg-[#F5821F] text-white font-black px-10 py-5 rounded-2xl tracking-[0.2em] uppercase shadow-xl mt-4 inline-block text-center"
+            className="w-fit bg-[#F5821F] text-white font-black px-8 py-3 rounded-2xl tracking-[0.2em] uppercase shadow-xl mt-4 inline-block text-center"
           >
             Let's Collaborate
           </motion.a>
