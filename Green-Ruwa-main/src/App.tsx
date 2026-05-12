@@ -193,6 +193,15 @@ export default function App() {
     if (isMenuOpen) setIsMenuOpen(false);
   };
 
+  // Fail-safe Scroll To Top on View Change
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, 10);
+    return () => clearTimeout(timer);
+  }, [view]);
+
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     if (hash && view === 'home') {
