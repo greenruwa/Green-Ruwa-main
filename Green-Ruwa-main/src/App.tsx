@@ -918,7 +918,7 @@ export default function App() {
               {/* Course Tiers */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
                 {[
-                  { title: "BEGINNER", price: "KSH 5,000", color: "#FEB916", features: ["Software Basics (Photoshop/Illustrator)", "Principles of Typography", "Basic Brand Identity", "2 Weeks Duration"] },
+                  { title: "BEGINNER", price: "KSH 5,000", color: "#F5821F", features: ["Software Basics (Photoshop/Illustrator)", "Principles of Typography", "Basic Brand Identity", "2 Weeks Duration"] },
                   { title: "INTERMEDIATE", price: "KSH 12,000", color: "#00FFFF", features: ["Advanced Compositing", "Premium 3D Logo Effects (Gold/Silver)", "Professional Product Flyers", "4 Weeks Duration"] },
                   { title: "ADVANCED", price: "KSH 25,000", color: "#FFFFFF", features: ["Everything in Intermediate", "Motion Graphics & Transitions (After Effects)", "Basics of Web Design & Deployment", "Video Editing & Storytelling", "8 Weeks Duration"], popular: true }
                 ].map((tier, i) => (
