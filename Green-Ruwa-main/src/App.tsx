@@ -1045,28 +1045,41 @@ export function AboutPage() {
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle,#F5821F_0%,rgba(255,255,255,0)_60%)] opacity-20" />
       </div>
+      
+      <style>{`
+        @keyframes mini-vibrate {
+          0%, 100% { transform: translate(0, 0); }
+          25% { transform: translate(1px, -1px); }
+          50% { transform: translate(-1px, 1px); }
+          75% { transform: translate(1px, 1px); }
+        }
+        .hover-vibrate:hover {
+          animation: mini-vibrate 0.2s ease-in-out;
+        }
+      `}</style>
 
-      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10 hover:-translate-y-2 transition-transform duration-300 ease-in-out">
+      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
         {/* Image Side */}
         <motion.div 
           initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="relative flex justify-center"
         >
-          {/* Navy Decorative Tab Top */}
-          <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 w-32 h-10 bg-[#0B1736] rounded-t-2xl z-0" />
-          
-          <div className="relative w-full max-w-md aspect-[4/5] bg-[#00FFFF] rounded-[3rem] shadow-2xl overflow-hidden border-8 border-white">
-            <img 
-              src={GreenMainImg} 
-              alt="Green Ruwa" 
-              className="w-full h-full object-cover object-[center_20%] scale-110"
-            />
-          </div>
+          <div className="relative flex justify-center group cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-105 hover-vibrate">
+            {/* Navy Decorative Tab Top */}
+            <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 w-32 h-10 bg-[#0B1736] rounded-t-2xl z-0" />
+            
+            <div className="relative w-full max-w-md aspect-[4/5] bg-[#00FFFF] rounded-[3rem] shadow-2xl overflow-hidden border-8 border-white">
+              <img 
+                src={GreenMainImg} 
+                alt="Green Ruwa" 
+                className="w-full h-full object-cover object-[center_20%] scale-110 transition-transform duration-500 group-hover:scale-115"
+              />
+            </div>
 
-          {/* Navy Decorative Tab Bottom */}
-          <div className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-64 h-16 bg-[#0B1736] rounded-2xl z-20 shadow-xl" />
+            {/* Navy Decorative Tab Bottom */}
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[90%] h-20 bg-[#0B1736] rounded-2xl z-20 shadow-2xl" />
+          </div>
         </motion.div>
 
         {/* Content Side */}
