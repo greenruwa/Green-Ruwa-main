@@ -158,6 +158,7 @@ export default function App() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showCommHub, setShowCommHub] = useState(false);
   const [view, setView] = useState<'home' | 'training' | 'about'>('home');
+  const [isScrolled, setIsScrolled] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -171,7 +172,7 @@ export default function App() {
     const level = formData.get('level');
 
     const message = `Hello, here are my application details, please take a look and give feedback.\n\n*Name:* ${name}\n*Email:* ${email}\n*Course Level:* ${level}\n*Goals:* ${goals}\n\nThank you`;
-    const whatsappUrl = `https://wa.me/254795665443?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${import.meta.env.VITE_CONTACT_PHONE}?text=${encodeURIComponent(message)}`;
     
     try {
       window.open(whatsappUrl, '_blank');
@@ -227,7 +228,8 @@ export default function App() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+      setIsScrolled(currentScrollY > 50);
+
       // Scroll to top button visibility
       setShowScrollTop(currentScrollY > 400);
       setShowCommHub(currentScrollY > 50);
@@ -241,9 +243,10 @@ export default function App() {
       
       setLastScrollY(currentScrollY);
     };
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -295,6 +298,8 @@ export default function App() {
         }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
         className="fixed top-0 left-0 right-0 z-50 bg-orange border-b border-white/20 shadow-xl"
+        role="navigation"
+        aria-label="Main menu"
       >
         <div className="flex items-center justify-between px-6 md:px-12 py-5 max-w-7xl mx-auto w-full">
           <div 
@@ -303,14 +308,15 @@ export default function App() {
             className="flex items-center gap-4 cursor-pointer"
             onClick={() => setView('home')}
           >
-            <div className="text-xl font-black tracking-tighter uppercase font-display text-[#0B1736] hover:text-white transition-colors duration-300">
+            <h1 className="text-xl font-black tracking-tighter uppercase font-display text-[#0B1736] hover:text-white transition-colors duration-300">
               GREEN RUWA
-            </div>
+            </h1>
             <motion.a 
-              href="https://wa.me/254795665443"
+              href={`https://wa.me/${import.meta.env.VITE_CONTACT_PHONE}`}
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(245, 130, 31, 1)" }}
+              aria-label="Visit Green Ruwa's WhatsApp profile"
               className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-orange to-amber-500 px-3 py-1 rounded-full animate-blink shadow-[0_0_15px_rgba(245,130,31,0.5)] cursor-pointer transition-shadow border-2 border-[#0B1736]"
             >
               <span className="text-[10px] font-black text-white tracking-widest">0795665443</span>
@@ -318,7 +324,7 @@ export default function App() {
             </motion.a>
           </div>
           
-          <div className="hidden md:flex items-center space-x-6 text-[10px] font-bold tracking-[0.4em] uppercase">
+          <nav className="hidden md:flex items-center space-x-6 text-[10px] font-bold tracking-[0.4em] uppercase" aria-label="Main navigation">
             {[
               { label: 'PORTFOLIO', action: 'work', type: 'button' },
               { label: 'TRAINING', action: () => setView('training'), type: 'button' },
@@ -343,22 +349,25 @@ export default function App() {
                 boxShadow: "0 0 25px rgba(245, 130, 31, 0.6)",
               }}
               style={{ background: 'linear-gradient(to right, #F5821F, #FF9D4D)' }}
+              aria-label="Hire Green Ruwa for your project"
               className="px-6 py-2 rounded-sm cursor-pointer inline-flex items-center gap-2 group transition-all border-2 border-[#0B1736]"
             >
               <span className="text-white font-black tracking-widest text-[9px]">HIRE ME</span>
             </motion.a>
-          </div>
+          </nav>
 
           <div className="md:hidden">
             {isMenuOpen ? (
-              <div 
+              <button 
                 className="text-[#0B1736] cursor-pointer p-2" 
                 onClick={() => setIsMenuOpen(false)}
+                aria-label="Close mobile menu"
               >
                 <span className="text-xl font-bold">✕</span>
-              </div>
+              </button>
             ) : (
-              <Menu 
+              <Menu
+                aria-label="Open mobile menu"
                 className="text-[#0B1736] cursor-pointer" 
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               />
@@ -438,18 +447,9 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="hero-title text-5xl sm:text-8xl md:text-9xl lg:text-[140px] font-black tracking-tight uppercase leading-[1.0] font-display mb-10 text-white cursor-default select-none"
+              aria-label="Green Ruwa - Multimedia Storytelling Consultant"
             >
-              <InteractiveChar char="I" />&nbsp;
-              <span className="text-orange" style={{ lineHeight: '1.2' }}>
-                {"DESIGN".split("").map((c, i) => (
-                  <InteractiveChar key={`d-${i}`} char={c} />
-                ))}
-              </span><br />
-              <span className="opacity-90">
-                {"WITH PASSION".split("").map((c, i) => (
-                  <InteractiveChar key={`p-${i}`} char={c} />
-                ))}
-              </span>
+              Green Ruwa
             </motion.h1>
 
             {/* Services Ticker (Visible on all devices) */}
@@ -487,7 +487,7 @@ export default function App() {
             {/* Mobile Minimal Contact Box */}
             <div className="sm:hidden mt-6 flex flex-col items-center gap-3">
               <motion.a
-                href="https://wa.me/254795665443"
+                href={`https://wa.me/${import.meta.env.VITE_CONTACT_PHONE}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-orange px-6 py-3 rounded-xl flex flex-col items-center gap-2 animate-blink border-2 border-white ring-2 ring-orange shadow-none"
@@ -620,7 +620,7 @@ export default function App() {
                     {/* Dynamic Border Glow on Hover */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: `inset 0 0 20px ${tool.color}` }} />
                     
-                    <img src={tool.img} alt={tool.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img src={tool.img} alt={`Project by Green Ruwa: ${tool.name} Software Toolkit`} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     
                     {/* Bottom-Heavy Overlay & Flickering Title Box */}
                     <div className="relative z-20 w-full p-4 bg-gradient-to-t from-black/90 via-black/40 to-transparent pt-20 flex justify-center">
@@ -731,7 +731,8 @@ export default function App() {
                     <div className="h-48 m-4 mb-0 relative overflow-hidden rounded-2xl shadow-inner">
                       <img 
                         src={post.img} 
-                        alt={post.title} 
+                        alt={`Project by Green Ruwa: ${post.title}`} 
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
@@ -897,7 +898,7 @@ export default function App() {
               </div>
               
               <motion.a
-                href="https://wa.me/254795665443"
+                href={`https://wa.me/${import.meta.env.VITE_CONTACT_PHONE}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05, y: -5, boxShadow: "0 25px 50px -12px rgba(37, 211, 102, 0.4)" }}
@@ -1082,7 +1083,8 @@ export function AboutPage() {
             <div className="relative w-full aspect-[4/5] bg-[#00FFFF] rounded-[2.5rem] sm:rounded-[3rem] shadow-2xl overflow-hidden border-4 sm:border-8 border-white">
               <img 
                 src={GreenMainImg} 
-                alt="Green Ruwa" 
+                alt="Green Ruwa - Multimedia Storytelling Consultant" 
+                loading="lazy"
                 className="w-full h-full object-cover object-[center_20%] scale-110 transition-transform duration-500 group-hover:scale-115"
               />
             </div>
@@ -1121,7 +1123,7 @@ export function AboutPage() {
           </div>
 
           <motion.a
-            href="https://wa.me/254795665443"
+            href={`https://wa.me/${import.meta.env.VITE_CONTACT_PHONE}`}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
@@ -1173,7 +1175,8 @@ function Footer() {
               { 
                 icon: <Facebook size={22} strokeWidth={2.5} />, 
                 href: "https://www.facebook.com/share/17CRKGQsij/",
-                label: "Facebook"
+                label: "Facebook",
+                aria: "Visit Green Ruwa's Facebook profile"
               },
               { 
                 icon: (
@@ -1182,7 +1185,8 @@ function Footer() {
                   </svg>
                 ), 
                 href: "https://www.tiktok.com/@green.ruwa?_r=1&_t=ZS-95rmL5JLQAM",
-                label: "TikTok"
+                label: "TikTok",
+                aria: "Visit Green Ruwa's TikTok profile"
               },
               { 
                 icon: (
@@ -1190,8 +1194,9 @@ function Footer() {
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.659 1.431 5.63 1.432h.006c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                   </svg>
                 ), 
-                href: "https://wa.me/0795665443",
-                label: "WhatsApp"
+                href: `https://wa.me/${import.meta.env.VITE_CONTACT_PHONE}`,
+                label: "WhatsApp",
+                aria: "Visit Green Ruwa's WhatsApp profile"
               }
             ].map((social, i) => (
               <div key={i} className="relative group p-[2px]">
@@ -1205,7 +1210,7 @@ function Footer() {
                   whileHover={{ scale: 1.1 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   className="relative z-10 w-14 h-14 rounded-full flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-orange hover:shadow-[0_0_20px_rgba(245,130,31,0.6)] transition-all duration-300"
-                  title={social.label}
+                  aria-label={social.aria}
                 >
                   {social.icon}
                 </motion.a>
@@ -1257,12 +1262,12 @@ function Snowfall() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
       {[...Array(40)].map((_, i) => {
-        const isOrange = Math.random() > 0.7;
-        const size = Math.random() * 6 + 2;
-        const left = Math.random() * 100;
-        const duration = Math.random() * 15 + 10;
-        const delay = -Math.random() * 20;
-        const opacity = Math.random() * 0.6 + 0.1;
+        const isOrange = (i * 7) % 10 > 7;
+        const size = ((i * 13) % 6) + 2;
+        const left = (i * 17) % 100;
+        const duration = ((i * 23) % 15) + 10;
+        const delay = -((i * 29) % 20);
+        const opacity = ((i * 31) % 6) / 10 + 0.1;
 
         return (
           <div
@@ -1289,6 +1294,7 @@ function Snowfall() {
 
 function FloatingCommHub({ isVisible, showScrollTop, onScrollTop }: { isVisible: boolean, showScrollTop: boolean, onScrollTop: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   if (!isVisible) return null;
 
@@ -1301,24 +1307,102 @@ function FloatingCommHub({ isVisible, showScrollTop, onScrollTop }: { isVisible:
     </svg>
   );
 
+  const handleWhatsAppClick = () => {
+    // Check if it's a mobile device or small screen
+    if (window.innerWidth < 1024) {
+      window.open(`https://wa.me/${import.meta.env.VITE_CONTACT_PHONE}`, "_blank", "noopener,noreferrer");
+    } else {
+      // On web view, toggle the custom window
+      setIsChatOpen(!isChatOpen);
+    }
+  };
+
   return (
     <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-center gap-3">
       <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Official WhatsApp Button */}
-            <motion.a
-              href="https://wa.me/254795665443"
-              target="_blank"
+        {/* Transforming Toggle Button (Now at the top) */}
+        <motion.button
+          onClick={() => {
+            if (isChatOpen) setIsChatOpen(false);
+            setIsOpen(!isOpen);
+          }}
+          className={`${buttonClass} ${glassBg} backdrop-blur-md border border-white/20`}
+          whileTap={{ scale: 0.9 }}
+        >
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <span className="text-2xl font-light">✕</span>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="call"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <motion.div
+                  animate={{ rotate: [0, -10, 10, -10, 10, 0] }}
+                  transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+                >
+                  <Phone size={20} className="text-orange fill-orange" />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.button>
+
+        {/* WEB-ONLY CHAT WINDOW */}
+        {isChatOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className="hidden lg:flex flex-col w-72 bg-white rounded-2xl shadow-2xl mb-4 overflow-hidden border border-gray-100"
+          >
+            <div className="bg-[#001524] p-4 text-white flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-[#00FFFF] overflow-hidden">
+                <img src={GreenMainImg} alt="Green Ruwa - Multimedia Storytelling Consultant" loading="lazy" className="w-full h-full object-cover" />
+              </div>
+              <div className="text-left">
+                <p className="font-bold text-sm">Green Ruwa</p>
+                <p className="text-xs text-[#00FFFF]">Typically replies in minutes</p>
+              </div>
+            </div>
+            <div className="p-4 bg-gray-50">
+              <p className="text-sm text-gray-700 bg-white p-3 rounded-lg shadow-sm text-left">
+                Hi there! 👋 Need a multimedia storyteller or a fresh brand identity? Let's talk!
+              </p>
+            </div>
+            <a 
+              href={`https://wa.me/${import.meta.env.VITE_CONTACT_PHONE}`} 
+              target="_blank" 
               rel="noopener noreferrer"
+              className="m-4 mt-0 bg-[#25D366] text-white text-center py-2 rounded-xl font-bold hover:bg-[#128C7E] transition-colors"
+            >
+              Start Chat
+            </a>
+          </motion.div>
+        )}
+        {isOpen && !isChatOpen && (
+          <>
+            {/* WhatsApp Button */}
+            <motion.button
               initial={{ opacity: 0, y: 10, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.8 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              onClick={handleWhatsAppClick}
               className={`${buttonClass} bg-[#25D366] hover:scale-110`}
             >
               <WhatsAppLogo />
-            </motion.a>
+            </motion.button>
 
             {/* Blue Dialer Button */}
             <motion.a
@@ -1335,43 +1419,7 @@ function FloatingCommHub({ isVisible, showScrollTop, onScrollTop }: { isVisible:
         )}
       </AnimatePresence>
 
-      {/* Transforming Toggle Button */}
-      <motion.button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`${buttonClass} ${glassBg} backdrop-blur-md border border-white/20`}
-        whileTap={{ scale: 0.9 }}
-      >
-        <AnimatePresence mode="wait">
-          {isOpen ? (
-            <motion.div
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <span className="text-2xl font-light">✕</span>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="call"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <motion.div
-                animate={{ rotate: [0, -10, 10, -10, 10, 0] }}
-                transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-              >
-                <Phone size={20} className="text-orange fill-orange" />
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.button>
-
-      {/* Scroll to Top Integration */}
+      {/* Scroll to Top Button */}
       <AnimatePresence>
         {showScrollTop && (
           <motion.button
@@ -1411,7 +1459,7 @@ function SpinToWin() {
 
     setIsClaiming(true);
     setTimeout(() => {
-      window.open(prize.link!, "_blank");
+      window.open(prize.link!, "_blank", "noopener,noreferrer");
       setIsClaiming(false);
     }, 1000);
   };
@@ -1421,7 +1469,7 @@ function SpinToWin() {
     setSpinning(true);
     setResult(null);
     
-    const extraSpins = (8 + Math.random() * 5) * 360;
+    const extraSpins = (8 + (Date.now() % 5)) * 360;
     const newRotation = rotation + extraSpins;
     setRotation(newRotation);
     
@@ -1572,9 +1620,9 @@ function Card({ videoSrc, title, category, delay = 0, href = "#", isInitiallyAct
     <a 
       href={href}
       target="_blank"
+      rel="noopener noreferrer"
       onClick={handleTouch}
       onTouchStart={handleTouch}
-      rel="noopener noreferrer"
       className="block w-full max-w-[320px]"
     > 
       <motion.div 
